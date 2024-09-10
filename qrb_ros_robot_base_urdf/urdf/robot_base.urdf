@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!--
+# Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+# SPDX-License-Identifier: BSD-3-Clause-Clear
+-->
+<robot name="robot_base" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:property name="box_length" value="0.62" />
+  <xacro:property name="box_width" value="0.5" />
+  <xacro:property name="box_height" value="0.285" />
+  <xacro:property name="chassis_height" value="0.0364" />
+  <xacro:property name="wheel_radius" value="0.0655" />
+  <xacro:property name="wheel_space" value="0.3302" />
+  <xacro:property name="wheel_thickness" value="0.05" />
+  <xacro:property name="laser_radius" value="0.038" />
+  <xacro:property name="laser_height" value="0.041" />
+
+  <material name="white">
+    <color rgba="1 1 1 1"/>
+  </material>
+
+  <material name="black">
+    <color rgba="0 0 0 1"/>
+  </material>
+
+  <link name="base_footprint">
+    <visual>
+      <geometry>
+        <sphere radius="0.001"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="${box_length} ${box_width} ${box_height}"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+  </link>
+  <joint name="base_link_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 ${chassis_height+box_height/2}"/>
+  </joint>
+
+  <link name="laser">
+    <visual>
+      <geometry>
+        <cylinder radius="${laser_radius}" length="${laser_height}" />
+      </geometry>
+      <material name="black"/>
+    </visual>
+  </link>
+  <joint name="laser_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="laser"/>
+    <origin xyz="${box_length/2-1-laser_radius-0.01} 0 ${0.186-chassis_height}" rpy="0 0 ${pi}" />
+  </joint>
+
+</robot>
