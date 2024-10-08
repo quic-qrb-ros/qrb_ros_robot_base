@@ -41,7 +41,7 @@ Clone this repository and dependencies under `<qirp_decompressed_workspace>/qirp
 cd <qirp_decompressed_workspace>/qirp-sdk/ros_ws
 git clone https://github.com/quic-qrb-ros/libqrc.git
 git clone https://github.com/quic-qrb-ros/qrb_ros_robot_base.git
-git clone https://github.com/QUIC-QRB-ROS/qrb_ros_interfaces.git
+git clone https://github.com/quic-qrb-ros/qrb_ros_interfaces.git
 ```
 
 Build projects
@@ -201,6 +201,6 @@ Thanks for your interest in contributing to qrb_ros_robot_base ! Please read our
 
 ## License
 
-qrb_ros_imu is licensed under the BSD-3-clause "New" or "Revised" License.
+qrb_ros_robot_base is licensed under the BSD-3-clause "New" or "Revised" License.
 
 Check out the [LICENSE](https://github.com/quic-qrb-ros/qrb_ros_robot_base/blob/main/LICENSE) for more details.
