@@ -1,0 +1,15 @@
+/qrb_robot_base_manager:
+  ros__parameters:
+    ultra_enable: true
+    rc_enable: true
+    motion_tf_enable: false
+    test_transport_latency_enable: false
+    car_wheel_space: 0.250
+    car_wheel_perimeter: 0.334
+    ultra_quantity: 5
+    scale_speed:
+    - 1.0
+    - 1.0
+    scale_speed_odom:
+    - 1.0
+    - 1.0
