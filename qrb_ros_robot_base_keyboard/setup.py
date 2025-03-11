@@ -1,21 +1,9 @@
 # Copyright (c) 2023-2024 Qualcomm Innovation Center, Inc. All rights reserved.
 # SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import os
 from setuptools import setup, find_packages
-from setuptools.command.install import install
 
 package_name = 'qrb_ros_robot_base_keyboard'
-
-class CustomInstallCommand(install):
-    def run(self):
-        install.run(self)
-        file_path = os.path.join(self.install_lib,"../../../lib/qrb_ros_robot_base_keyboard/robot_base")
-        with open(file_path,"r") as file:
-            lines = file.readlines()
-            lines[0] = '#!/usr/bin/python \n'
-        with open(file_path, 'w') as file:
-            file.writelines(lines)
 
 setup(
     name=package_name,
@@ -40,8 +28,4 @@ setup(
             'robot_base = src.robot_base_keyboard:main',
         ],
     },
-
-    cmdclass={
-    'install':CustomInstallCommand
-    }
 )

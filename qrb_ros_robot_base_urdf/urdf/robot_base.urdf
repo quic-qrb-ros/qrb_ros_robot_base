@@ -56,7 +56,7 @@
   <joint name="laser_joint" type="fixed">
     <parent link="base_link"/>
     <child link="laser"/>
-    <origin xyz="${box_length/2-1-laser_radius-0.01} 0 ${0.186-chassis_height}" rpy="0 0 ${pi}" />
+    <origin xyz="${box_length/2-laser_radius-0.01} 0 ${0.186-chassis_height-(box_height/2)}" rpy="0 0 ${pi}" />
   </joint>
 
 </robot>
