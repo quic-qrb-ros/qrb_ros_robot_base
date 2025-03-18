@@ -13,7 +13,7 @@ namespace robot_base
 {
 using qrb::robot_base_manager::ChargerManager;
 using qrb_ros_robot_base_msgs::msg::ChargerCmd;
-using qrb_ros_robot_base_msgs::msg::GetBatteryState;
+using qrb_ros_robot_base_msgs::srv::GetBatteryState;
 using ChargerState = qrb::robot_base_manager::ChargerState;
 
 ChargerController::ChargerController(rclcpp::Node::SharedPtr node) : node_(std::move(node))
@@ -25,8 +25,10 @@ ChargerController::ChargerController(rclcpp::Node::SharedPtr node) : node_(std::
   options.callback_group = callback_group_;
 
   battery_pub_ = node_->create_publisher<sensor_msgs::msg::BatteryState>("battery", 30);
-  get_battery_sub_ = node_->create_subscription<GetBatteryState>("get_battery_state", 30,
-      std::bind(&ChargerController::get_battery_state_callback, this, _1), options);
+  get_battery_state_server_ = node_->create_service<GetBatteryState>("get_battery_state",
+      std::bind(&ChargerController::get_battery_state_callback, this, _1, _2, _3),
+      rmw_qos_profile_services_default, callback_group_);
+
   charge_cmd_sub_ = node_->create_subscription<ChargerCmd>(
       "charger_cmd", 30, std::bind(&ChargerController::charge_cmd_callback, this, _1), options);
 }
@@ -69,7 +71,9 @@ void ChargerController::publish_battery(const qrb::robot_base_manager::PowerStat
 }
 
 void ChargerController::get_battery_state_callback(
-    const qrb_ros_robot_base_msgs::msg::GetBatteryState::SharedPtr msg)
+    const std::shared_ptr<rmw_request_id_t> request_header,
+    const std::shared_ptr<GetBatteryState::Request> request,
+    std::shared_ptr<GetBatteryState::Response> response)
 {
   RCLCPP_INFO(node_->get_logger(), "ChargerController: get battery state");
   ChargerManager::get_instance().get_power_state();
