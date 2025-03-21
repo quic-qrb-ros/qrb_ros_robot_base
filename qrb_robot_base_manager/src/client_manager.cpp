@@ -43,14 +43,14 @@ void ClientManager::qrc_message_handle(void * data)
     case client_msg_type_e::SET_CLIENT:
       get_instance().set_client_ack_ = true;
       get_instance().client_ = static_cast<Client>(message->client);
-      std::cout << "ClientManager: set client result"
-                << ", client: " << message->client << std::endl;
+      std::cout << "ClientManager: set client result" << ", client: " << message->client
+            << std::endl;
       break;
     case client_msg_type_e::GET_CLIENT:
       get_instance().get_client_ack_ = true;
       get_instance().client_ = static_cast<Client>(message->client);
-      std::cout << "ClientManager: get client result"
-                << ", client: " << message->client << std::endl;
+      std::cout << "ClientManager: get client result" << ", client: " << message->client
+            << std::endl;
       break;
     default:
       std::cerr << "ClientManager: qrc message not valid, type: " << message->msg_type << std::endl;

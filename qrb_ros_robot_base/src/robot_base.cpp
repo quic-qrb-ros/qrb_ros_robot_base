@@ -56,6 +56,7 @@ void RobotBase::run()
 void RobotBase::shutdown()
 {
   motion_ctl_->stop();
+  rclcpp::sleep_for(std::chrono::seconds(1));
   qrb::robot_base_manager::RobotBaseManager::get_instance().release_robot_base_manager();
 }
 
