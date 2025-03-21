@@ -45,8 +45,8 @@ from qrb_ros_robot_base_msgs.srv import SetControlMode
 from qrb_ros_robot_base_msgs.srv import GetControlMode
 from qrb_ros_robot_base_msgs.srv import SetMotionMode
 from qrb_ros_robot_base_msgs.srv import EmergencyCmd
+from qrb_ros_robot_base_msgs.srv import GetBatteryState
 from qrb_ros_robot_base_msgs.msg import ChargerCmd
-from qrb_ros_robot_base_msgs.msg import GetBatteryState
 
 if sys.platform == 'win32':
     import msvcrt
@@ -191,7 +191,7 @@ def main():
     set_motion_mode_client = node.create_client(SetMotionMode, '{}set_motion_mode'.format(namespace))
     emergency_cmd_client = node.create_client(EmergencyCmd, '{}emergency_cmd'.format(namespace))
     charger_cmd_pub = node.create_publisher(ChargerCmd, '{}charger_cmd'.format(namespace), 10)
-    get_battery_state_pub = node.create_publisher(GetBatteryState, '{}get_battery_state'.format(namespace), 10)
+    get_battery_state_client = node.create_client(GetBatteryState, '{}get_battery_state'.format(namespace))
 
     spinner = threading.Thread(target=rclpy.spin, args=(node,))
     spinner.start()
@@ -279,8 +279,13 @@ def main():
                     charger_cmd_pub.publish(charger_msg)
                 # get battery state
                 elif key == '0':
-                    get_battery_state_msg = GetBatteryState()
-                    get_battery_state_pub.publish(get_battery_state_msg)
+                    print('get battery state start... ', end='', flush=True)
+                    if not get_battery_state_client.wait_for_service(timeout_sec=1.0):
+                        print('service not available, please check service status...')
+                        continue
+                    req = GetBatteryState.Request()
+                    resp = get_battery_state_client.call(req)
+                    print('success, voltage: {}, current: {}, power_supply_status: {}'.format(resp.battery_state.voltage, resp.battery_state.current, resp.battery_state.power_supply_status))
                 continue
             elif key == 'k':
                 print('stop!!!')

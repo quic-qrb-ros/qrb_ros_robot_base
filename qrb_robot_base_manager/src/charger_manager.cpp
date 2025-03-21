@@ -48,14 +48,18 @@ void ChargerManager::qrc_message_handle(void * data)
     case charger_ctl_cmd_e::GET_CTL_VOLTAGE:
       std::cout << "ChargerManager: got voltage: " << msg->cmd_data.voltage << std::endl;
       get_instance().current_state_.voltage = msg->cmd_data.voltage;
-      if (get_instance().power_state_cb_) {
+      if (get_instance().is_updating_) {
+        get_instance().get_voltage_ack_ = true;
+      } else if (get_instance().power_state_cb_) {
         get_instance().power_state_cb_(get_instance().current_state_);
       }
       break;
     case charger_ctl_cmd_e::GET_CTL_CURRENT:
       std::cout << "ChargerManager: got current:" << msg->cmd_data.current << std::endl;
       get_instance().current_state_.current = msg->cmd_data.current;
-      if (get_instance().power_state_cb_) {
+      if (get_instance().is_updating_) {
+        get_instance().get_current_ack_ = true;
+      } else if (get_instance().power_state_cb_) {
         get_instance().power_state_cb_(get_instance().current_state_);
       }
       break;
@@ -63,7 +67,9 @@ void ChargerManager::qrc_message_handle(void * data)
       std::cout << "ChargerManager: got state machine state: " << msg->cmd_data.sm_state
                 << std::endl;
       get_instance().current_state_.charger_state = ChargerState(msg->cmd_data.sm_state);
-      if (get_instance().power_state_cb_) {
+      if (get_instance().is_updating_) {
+        get_instance().get_state_machine_ack_ = true;
+      } else if (get_instance().power_state_cb_) {
         get_instance().power_state_cb_(get_instance().current_state_);
       }
       break;
@@ -121,16 +127,31 @@ void ChargerManager::register_charging_state_callback(std::function<void(const u
   charging_state_cb_ = std::move(cb);
 }
 
-bool ChargerManager::get_power_state()
+PowerState ChargerManager::get_power_state()
 {
-  // TODO(impl) will not receive GET_CTL_ALL_STATE!
+  {
+    std::unique_lock<std::mutex> lock(msg_mtx_);
+    is_updating_ = true;
+  }
+
   charger_ctl_msg_s msg;
   msg.cmd_type = charger_ctl_cmd_e::GET_CTL_ALL_STATE;
   if (!QrcUtils::send_message(pipe_, &msg, sizeof(msg))) {
     std::cerr << "ChargerManager: get power state failed" << std::endl;
-    return false;
   }
-  return true;
+
+  {
+    std::unique_lock<std::mutex> lock(msg_mtx_);
+    msg_cond_.wait_for(lock, std::chrono::seconds(1),
+        [this] { return (get_voltage_ack_ && get_current_ack_ && get_state_machine_ack_); });
+
+    get_voltage_ack_ = false;
+    get_current_ack_ = false;
+    get_state_machine_ack_ = false;
+    is_updating_ = false;
+  }
+
+  return current_state_;
 }
 
 bool ChargerManager::start_charging()

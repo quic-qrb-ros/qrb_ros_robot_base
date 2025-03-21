@@ -16,6 +16,7 @@ namespace qrb
 {
 namespace robot_base_manager
 {
+
 enum class ChargerState
 {
   unknown,
@@ -59,7 +60,7 @@ public:
   bool get_current();
   bool get_pile_state();
   bool get_charger_state();
-  bool get_power_state();
+  PowerState get_power_state();
 
   void register_error_callback(std::function<void(const Error &)>);
   void register_pile_state_callback(std::function<void(const uint32_t)> cb);
@@ -71,8 +72,11 @@ private:
   std::condition_variable msg_cond_;
   bool start_charging_ack_ = false;
   bool stop_charging_ack_ = false;
-
+  bool is_updating_ = false;
   PowerState current_state_{};
+  bool get_voltage_ack_ = false;
+  bool get_current_ack_ = false;
+  bool get_state_machine_ack_ = false;
 
   std::function<void(const PowerState &)> power_state_cb_{ nullptr };
   std::function<void(const Error &)> error_cb_{ nullptr };

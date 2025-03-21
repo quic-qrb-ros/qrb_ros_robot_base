@@ -27,8 +27,11 @@ private:
 
   rclcpp::Publisher<sensor_msgs::msg::BatteryState>::SharedPtr battery_pub_;
   rclcpp::Subscription<qrb_ros_robot_base_msgs::msg::ChargerCmd>::SharedPtr charge_cmd_sub_;
-  rclcpp::Service<qrb_ros_robot_base_msgs::srv::GetBatteryState>::SharedPtr get_battery_state_server_;
+  rclcpp::Service<qrb_ros_robot_base_msgs::srv::GetBatteryState>::SharedPtr
+      get_battery_state_server_;
 
+  sensor_msgs::msg::BatteryState power_state_to_msg(
+      const qrb::robot_base_manager::PowerState & state);
   void publish_battery(const qrb::robot_base_manager::PowerState & state);
   void get_battery_state_callback(const std::shared_ptr<rmw_request_id_t> request_header,
       const std::shared_ptr<qrb_ros_robot_base_msgs::srv::GetBatteryState::Request> request,

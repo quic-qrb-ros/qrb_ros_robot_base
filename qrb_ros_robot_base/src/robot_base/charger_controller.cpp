@@ -39,7 +39,8 @@ void ChargerController::run()
       std::bind(&ChargerController::publish_battery, this, std::placeholders::_1));
 }
 
-void ChargerController::publish_battery(const qrb::robot_base_manager::PowerState & state)
+sensor_msgs::msg::BatteryState ChargerController::power_state_to_msg(
+    const qrb::robot_base_manager::PowerState & state)
 {
   sensor_msgs::msg::BatteryState msg{};
 
@@ -48,7 +49,6 @@ void ChargerController::publish_battery(const qrb::robot_base_manager::PowerStat
 
   msg.voltage = state.voltage;
   msg.current = state.current;
-
   std::map<ChargerState, uint8_t> mapping{
     { ChargerState::unknown, sensor_msgs::msg::BatteryState::POWER_SUPPLY_STATUS_UNKNOWN },
     { ChargerState::charging, sensor_msgs::msg::BatteryState::POWER_SUPPLY_STATUS_CHARGING },
@@ -59,15 +59,18 @@ void ChargerController::publish_battery(const qrb::robot_base_manager::PowerStat
     { ChargerState::force_charging, 7 },
     { ChargerState::error, 8 },
   };
+
   if (mapping.find(state.charger_state) != mapping.end()) {
     msg.power_supply_status = mapping.at(state.charger_state);
   } else {
     msg.power_supply_status = sensor_msgs::msg::BatteryState::POWER_SUPPLY_STATUS_UNKNOWN;
   }
+  return msg;
+}
 
-  // TODO(impl) other battery information?
-
-  battery_pub_->publish(msg);
+void ChargerController::publish_battery(const qrb::robot_base_manager::PowerState & state)
+{
+  battery_pub_->publish(power_state_to_msg(state));
 }
 
 void ChargerController::get_battery_state_callback(
@@ -76,7 +79,10 @@ void ChargerController::get_battery_state_callback(
     std::shared_ptr<GetBatteryState::Response> response)
 {
   RCLCPP_INFO(node_->get_logger(), "ChargerController: get battery state");
-  ChargerManager::get_instance().get_power_state();
+  auto power_state = ChargerManager::get_instance().get_power_state();
+
+  response->battery_state =
+      static_cast<sensor_msgs::msg::BatteryState>(power_state_to_msg(power_state));
 }
 
 void ChargerController::charge_cmd_callback(
