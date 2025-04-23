@@ -4,7 +4,7 @@
 
 QRB ROS Robot Base control package provide ROS interfaces  to control AMR robot base.
 
-It will init robot base, sync time with MCB, provide ROS interfaces for control robot base, publish robot base state with ROS topics and provide test tools for robot base control. All the data between MCB and RBx side through [QRC protocol](https://github.com/quic-qrb-ros/robot_base_qrc).
+It will init robot base, sync time with MCB, provide ROS interfaces for control robot base, publish robot base state with ROS topics and provide test tools for robot base control. All the data between MCB and RBx side through [QRC protocol](https://github.com/qualcomm-qrb-ros/robot_base_qrc).
 
 ## Packages
 
@@ -39,9 +39,9 @@ Clone this repository and dependencies under `<qirp_decompressed_workspace>/qirp
 
 ```bash
 cd <qirp_decompressed_workspace>/qirp-sdk/ros_ws
-git clone https://github.com/quic-qrb-ros/libqrc.git
-git clone https://github.com/quic-qrb-ros/qrb_ros_robot_base.git
-git clone https://github.com/quic-qrb-ros/qrb_ros_interfaces.git
+git clone https://github.com/qualcomm-qrb-ros/libqrc.git
+git clone https://github.com/qualcomm-qrb-ros/qrb_ros_robot_base.git
+git clone https://github.com/qualcomm-qrb-ros/qrb_ros_interfaces.git
 ```
 
 Build projects
@@ -197,10 +197,10 @@ This package is designed and tested to be compatible with ROS 2 Humble running o
 
 ## Contributions
 
-Thanks for your interest in contributing to qrb_ros_robot_base ! Please read our [Contributions Page](https://github.com/quic-qrb-ros/qrb_ros_robot_base/blob/main/CONTRIBUTING.md) for more information on contributing features or bug fixes. We look forward to your participation!
+Thanks for your interest in contributing to qrb_ros_robot_base ! Please read our [Contributions Page](https://github.com/qualcomm-qrb-ros/qrb_ros_robot_base/blob/main/CONTRIBUTING.md) for more information on contributing features or bug fixes. We look forward to your participation!
 
 ## License
 
 qrb_ros_robot_base is licensed under the BSD-3-clause "New" or "Revised" License.
 
-Check out the [LICENSE](https://github.com/quic-qrb-ros/qrb_ros_robot_base/blob/main/LICENSE) for more details.
+Check out the [LICENSE](https://github.com/qualcomm-qrb-ros/qrb_ros_robot_base/blob/main/LICENSE) for more details.
