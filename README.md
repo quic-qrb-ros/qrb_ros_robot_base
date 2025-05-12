@@ -89,9 +89,9 @@ Use keyboard to control
 ```
 ---------------------------------------------------------------
 Moving around:      Control mode:        Charger command:
-   u    i    o       1   2   3   ?       8   9   0
+   u    i    o       1   2   3   4       8   9   0
    j    k    l      Motion mode:         Emergency command:
-   m    ,    .       4   5   6   7       [   ]
+   m    ,    .       5   6   7           [   ]
 ---------------------------------------------------------------
 
 k : stop
@@ -103,10 +103,9 @@ e/c : increase/decrease only angular speed by 10%
 1 : application control
 2 : charger control
 3 : remote controller
-? : query current mode
+4 : query current mode
 
-4 : speed mode (for test only)
-5 : driver error (for test only)
+5 : speed mode (for test only)
 6 : motion emergency enable (for test only)
 7 : motion emergency disable (for test only)
 
