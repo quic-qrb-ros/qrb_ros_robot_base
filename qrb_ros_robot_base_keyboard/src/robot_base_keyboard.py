@@ -60,9 +60,9 @@ This node takes keypresses from the keyboard and publishes them
 as Twist/TwistStamped messages. It works best with a US keyboard layout.
 ---------------------------------------------------------------
 Moving control:     Control mode:        Charger command:
-   u    i    o       1   2   3   ?       8   9   0
+   u    i    o       1   2   3   4       8   9   0
    j    k    l      Motion mode:         Emergency command:
-   m    ,    .       4   5   6   7       [   ]
+   m    ,    .       5   6   7           [   ]
 ---------------------------------------------------------------
 
 k : stop
@@ -75,10 +75,9 @@ Choose the control mode
 1 : application control (RBx)
 2 : charging-Pile control
 3 : remote controller
-? : query current mode
+4 : query current mode
 
-4 : speed mode (for test only)
-5 : driver error (for test only)
+5 : speed mode (for test only)
 6 : motion emergency enable (for test only, need to restart)
 7 : motion emergency disable (for test only)
 
@@ -116,12 +115,11 @@ controlModeBindings = {
     '1': (0, 'application control'),
     '2': (1, 'charger control'),
     '3': (2, 'remote controller'),
-    '?': (3, 'query current mode'),
+    '4': (3, 'query current mode'),
 }
 
 motionModeBindings = {
-    '4': (1, 'speed mode'),
-    '5': (4, 'driver error'),
+    '5': (1, 'speed mode'),
     '6': (5, 'motion emergency brake enable'),
     '7': (6, 'motion emergency brake disable'),
 }
@@ -220,7 +218,7 @@ def main():
             key = getKey(settings)
             if key in controlModeBindings.keys():
                 # get control mode
-                if key == '?':
+                if key == '4':
                   print('get control mode start... ', end='', flush=True)
                   if not get_control_mode_client.wait_for_service(timeout_sec=1.0):
                       print('service not available, please check service status...')
