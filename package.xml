@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>qrb_robot_base_manager</name>
+  <name>qrb_ros_robot_base</name>
   <version>1.0.0</version>
-  <description>QRB Robot base manager library</description>
+  <description>QRB ROS robot base package</description>
   <maintainer email="quic_penwang@quicinc.com">Peng Wang</maintainer>
   <maintainer email="quic_laoyi@quicinc.com">Busy Lao</maintainer>
+  <maintainer email="chenghen@qti.qualcomm.com">Chengheng Tan</maintainer>
   <license>BSD-3-Clause-Clear</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
@@ -13,7 +14,15 @@
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
 
-  <depend>libqrc</depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>nav_msgs</build_depend>
+  <build_depend>nav2_msgs</build_depend>
+  <build_depend>tf2</build_depend>
+  <build_depend>tf2_ros</build_depend>
+  <build_depend>qrb_ros_robot_base_msgs</build_depend>
+  <build_depend>qrb_robot_base_manager</build_depend>
 
   <export>
     <build_type>ament_cmake</build_type>
