@@ -19,7 +19,7 @@ endif()
 find_package(ament_cmake REQUIRED)
 
 install(
-  DIRECTORY launch rviz urdf
+  DIRECTORY urdf
   DESTINATION share/${PROJECT_NAME}
 )
 
