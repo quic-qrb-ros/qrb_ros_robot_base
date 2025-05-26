@@ -1,0 +1,12 @@
+Source: ros-jazzy-qrb-robot-base-manager
+Section: misc
+Priority: optional
+Maintainer: Chengheng Tan <chenghen@qti.qualcomm.com>
+Build-Depends: debhelper (>= 9.0.0), qcom-libqrc-dev, ros-jazzy-ament-cmake, ros-jazzy-ament-lint-auto <!nocheck>, ros-jazzy-ament-lint-common <!nocheck>
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-jazzy-qrb-robot-base-manager
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, qcom-libqrc
+Description: QRB Robot base manager library
