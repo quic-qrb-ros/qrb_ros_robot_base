@@ -4,9 +4,9 @@
   <name>qrb_ros_robot_base</name>
   <version>1.0.0</version>
   <description>QRB ROS robot base package</description>
+  <maintainer email="chenghen@qti.qualcomm.com">Chengheng Tan</maintainer>
   <maintainer email="quic_penwang@quicinc.com">Peng Wang</maintainer>
   <maintainer email="quic_laoyi@quicinc.com">Busy Lao</maintainer>
-  <maintainer email="chenghen@qti.qualcomm.com">Chengheng Tan</maintainer>
   <license>BSD-3-Clause-Clear</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
