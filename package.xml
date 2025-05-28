@@ -4,6 +4,7 @@
   <name>qrb_robot_base_manager</name>
   <version>1.0.0</version>
   <description>QRB Robot base manager library</description>
+  <maintainer email="chenghen@qti.qualcomm.com">Chengheng Tan</maintainer>
   <maintainer email="quic_penwang@quicinc.com">Peng Wang</maintainer>
   <maintainer email="quic_laoyi@quicinc.com">Busy Lao</maintainer>
   <license>BSD-3-Clause-Clear</license>
@@ -12,8 +13,6 @@
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
-
-  <depend>libqrc</depend>
 
   <export>
     <build_type>ament_cmake</build_type>
