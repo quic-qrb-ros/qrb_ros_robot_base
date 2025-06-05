@@ -8,5 +8,5 @@ Standards-Version: 3.9.2
 
 Package: ros-jazzy-qrb-ros-robot-base
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, 
+Depends: ros-jazzy-geometry-msgs, ros-jazzy-nav-msgs, ros-jazzy-qrb-ros-robot-base-msgs, ros-jazzy-qrb-robot-base-manager, ros-jazzy-qrb-ros-robot-base-urdf,ros-jazzy-sensor-msgs, ros-jazzy-std-msgs, ros-jazzy-tf2, ros-jazzy-tf2-ros
 Description: QRB ROS robot base package
