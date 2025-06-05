@@ -20,8 +20,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 include_directories(include)
 
 find_package(ament_cmake REQUIRED)
-find_package(libqrc REQUIRED)
-
 
 
 add_library(${PROJECT_NAME} SHARED
@@ -39,9 +37,7 @@ add_library(${PROJECT_NAME} SHARED
   src/error.cpp
 )
 
-ament_target_dependencies(${PROJECT_NAME}
-  libqrc
-)
+target_link_libraries(${PROJECT_NAME} qrc)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
   VERSION ${PROJECT_VERSION}
@@ -67,6 +63,5 @@ install(
 )
 
 ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
-ament_export_dependencies(libqrc)
 
 ament_package()
